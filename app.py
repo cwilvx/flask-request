@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import urllib.request, json
+import os
 
 app = Flask(__name__)
 
@@ -9,8 +10,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def get_movies():
-    url = "https://api.themoviedb.org/3/discover/movie?api_key=18a017b1725a276ac9a9838ec5345147"
-
+    url = "https://api.themoviedb.org/3/discover/movie?api_key={}".format(os.environ.get("TMDB_API_KEY"))
+    print(os.environ.get("TMDB_API_KEY"))
     response = urllib.request.urlopen(url)
     data = response.read()
     jsondata = json.loads(data)
